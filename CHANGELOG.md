@@ -6,6 +6,15 @@
 
 ---
 
+## 배포 · GitHub Pages · 공유 미리보기
+
+- 주소: https://gosudoci.github.io/dbplanet-site/ (저장소 `gosudoci/dbplanet-site`, `main` 브랜치에 푸시하면 1분쯤 뒤 반영)
+- 링크 공유 미리보기(OG·트위터 카드) 추가: 제목·설명·이미지. 이미지 `assets/og-image.jpg`(1200×630)는 첫 화면 일식+제목을 실제 브라우저에서 캡처(헤더·버튼 숨김).
+- 탭 아이콘 `favicon.svg`(로고의 파란 점) 추가.
+- Pretendard 글꼴 preload 주소가 404 → npm 경로(`cdn.jsdelivr.net/npm/pretendard@1.3.9`)로 교체. 글꼴은 전에도 CSS로 불러와져 화면 변화는 없음.
+
+---
+
 ## v22 · Magnific 코로나 영상 (되돌림)
 
 - 보고 나서 이전 버전(v21, 셰이더로 그린 도는 일식 빛)이 낫다고 하셔서 사이트를 v21로 되돌림. v22는 `versions/v22`에 그대로 보관(영상 파일 `assets/intro/corona-orbit.mp4`도 유지).
