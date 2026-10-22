@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>디비플래닛 DB PLANET — 보이지 않던 브랜드에, 빛을.</title>
+<meta name="description" content="뷰티·헬스케어 브랜드가 검색에서 먼저 발견되도록, 데이터로 설계합니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+<script src="main.js" defer></script>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<header id="siteHeader" class="site-header">
+  <div class="container header-inner">
+    <a href="#s1" class="logo"><span class="logo-dot"></span><span class="logo-text">DB PLANET</span></a>
+    <div class="header-right">
+      <nav class="header-nav">
+        <a href="#s3">브랜드 스토리</a>
+        <a href="#s4">서비스</a>
+        <a href="#s6">작업 사례</a>
+        <a href="#s7">인사이트</a>
+      </nav>
+      <a href="#s8" class="btn-header">무료 진단 신청</a>
+    </div>
+  </div>
+</header>
+
+<!-- S1 IMMERSIVE INTRO -->
+<section id="s1" data-screen-label="S1 Intro" class="immersive">
+  <div id="introStage" class="intro-stage">
+    <div id="introFallback" class="intro-fallback"></div>
+    <canvas id="introCanvas" class="intro-canvas"></canvas>
+    <div class="layer vignette"></div>
+    <div class="layer">
+      <div class="intro-copy">
+        <div data-exit="0"><h1 data-enter class="intro-h1">보이지 않던 브랜드에, <span data-breathe class="grad-text">빛을.</span></h1></div>
+        <div data-exit="1"><p data-enter class="intro-sub">뷰티·헬스케어 브랜드가 검색에서 먼저 발견되도록, 데이터로 설계합니다.</p></div>
+      </div>
+      <div class="intro-scroll">
+        <div data-exit="2"><a data-enter href="#next-chapter" aria-label="다음 챕터로 스크롤" class="scroll-cue"><span class="scroll-ring"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"></path></svg></span>Scroll to explore</a></div>
+      </div>
+    </div>
+
+    <!-- 문제 챕터 텍스트 (스크린리더 순서: h2 → 본문 → 고민 문장) -->
+    <div id="probLayer" class="layer">
+      <div class="prob-copy">
+        <h2 data-stage="title" data-fit data-mfs="38" class="stage h-prob ts">좋은 제품인데,<br>왜 검색하면 보이지 않을까요?</h2>
+        <p data-stage="body" data-mfs="18" class="stage p-prob ts">밤하늘의 수많은 행성 중, 우리 눈에 보이는 건 빛을 받는 일부뿐입니다.</p>
+      </div>
+      <svg aria-hidden="true" class="prob-lines">
+        <line id="probLine0" x1="0" y1="0" x2="0" y2="0" stroke="rgba(201,206,214,0.4)" stroke-width="1" opacity="0"></line>
+        <line id="probLine1" x1="0" y1="0" x2="0" y2="0" stroke="rgba(201,206,214,0.4)" stroke-width="1" opacity="0"></line>
+        <line id="probLine2" x1="0" y1="0" x2="0" y2="0" stroke="rgba(201,206,214,0.4)" stroke-width="1" opacity="0"></line>
+      </svg>
+      <ul id="probCards" class="prob-cards">
+        <li data-concern="0" class="concern">“광고비는 나가는데 효과는 모르겠어요”</li>
+        <li data-concern="1" class="concern">“검색하면 대형 브랜드만 보여요”</li>
+        <li data-concern="2" class="concern">“광고 심의 표현이 늘 걱정돼요”</li>
+      </ul>
+    </div>
+
+    <!-- 이름 챕터 텍스트 (DOM 순서: 라벨 → DB → Planets → h2 → 링크) -->
+    <div id="nameLayer" class="layer">
+      <div id="nameBlock" class="name-block">
+        <div data-stage="label" data-chapter="name" class="stage eyebrow">BRAND NAME</div>
+        <div class="name-terms">
+          <div data-stage="db" data-chapter="name" class="stage name-term"><span class="name-word">DB</span><span class="name-desc">소비자가 찾는 길을 읽는 데이터</span></div>
+          <div data-stage="planets" data-chapter="name" class="stage name-term"><span class="name-word">Planets</span><span class="name-desc">저마다의 빛을 가진 브랜드</span></div>
+        </div>
+        <div data-stage="closing" data-chapter="name" data-pe class="stage name-closing">
+          <h2 class="h-name">데이터로 브랜드가 발견되는 순간까지, <span class="grad-text">디비플래닛</span></h2>
+          <a href="#s3" class="link-arrow"><span>브랜드 스토리 더 보기</span><span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 서비스 챕터 텍스트 -->
+    <div id="svcLayer" class="layer">
+      <div class="chapter-intro">
+        <div data-stage="intro" data-chapter="service" class="stage chapter-intro-inner"><div class="eyebrow">OUR SERVICE</div><h2 data-mfs="34" class="h-chapter ts">브랜드가 발견되기까지,<br>5단계로 함께합니다</h2></div>
+      </div>
+      <div id="svcBlock" data-col="left" class="seg-block seg-left">
+        <!-- 서비스 단계: 순서대로. 제목(h3)이 하단 내비 PREV/NEXT 라벨로도 쓰인다 -->
+        <div data-segwrap class="seg-wrap"><div data-seg="service" data-idx="0" class="seg svc-seg"><span class="step-num">STEP 01 / 05</span><h3 data-blur data-mfs="26" class="h-seg ts">브랜드 진단</h3><p data-mfs="16" class="p-seg ts">지금 우리 브랜드가 검색에서 어디쯤 보이는지 정확히 알 수 있습니다</p></div></div>
+        <div data-segwrap class="seg-wrap"><div data-seg="service" data-idx="1" class="seg svc-seg"><span class="step-num">STEP 02 / 05</span><h3 data-blur data-mfs="26" class="h-seg ts">키워드 분석</h3><p data-mfs="16" class="p-seg ts">고객이 실제로 검색하는 단어를 데이터로 찾아냅니다</p></div></div>
+        <div data-segwrap class="seg-wrap"><div data-seg="service" data-idx="2" class="seg svc-seg"><span class="step-num">STEP 03 / 05</span><h3 data-blur data-mfs="26" class="h-seg ts">콘텐츠 제작</h3><p data-mfs="16" class="p-seg ts">검색에 강한 상세페이지·이미지·숏폼을 광고 심의 기준에 맞춰 만듭니다</p></div></div>
+        <div data-segwrap class="seg-wrap"><div data-seg="service" data-idx="3" class="seg svc-seg"><span class="step-num">STEP 04 / 05</span><h3 data-blur data-mfs="26" class="h-seg ts">광고 운영</h3><p data-mfs="16" class="p-seg ts">네이버 스마트스토어·쿠팡 광고를 데이터에 따라 운영합니다</p></div></div>
+        <div data-segwrap class="seg-wrap"><div data-seg="service" data-idx="4" class="seg svc-seg"><span class="step-num">STEP 05 / 05</span><h3 data-blur data-mfs="26" class="h-seg ts">월간 성과 리포트</h3><p data-mfs="16" class="p-seg ts">검색 순위·광고비·매출 변화를 매달 한눈에 확인합니다</p></div></div>
+      </div>
+    </div>
+
+    <!-- 작업 사례 챕터 텍스트 (사례 3개 모두 DOM, 현재 사례 외에는 시각적으로만 숨김) -->
+    <!-- 실제 사례가 들어오면 '예시' 배지를 지우고 수치를 채운다. 영상은 main.js의 WORKS_MEDIA에 넣는다 -->
+    <div id="worksLayer" class="layer">
+      <div class="chapter-intro">
+        <div data-stage="intro" data-chapter="works" class="stage chapter-intro-inner"><div class="eyebrow">OUR WORK</div><h2 data-mfs="34" class="h-chapter ts">감이 아닌 결과물로<br>보여드립니다</h2></div>
+      </div>
+      <div id="worksBlock" data-col="right" class="seg-block seg-right">
+        <div data-segwrap class="seg-wrap">
+          <article data-seg="works" data-idx="0" class="seg works-seg">
+            <div class="works-meta"><span class="works-num">01 / 03</span><span class="tag-outline">건강기능식품 · 스마트스토어</span></div>
+            <div class="works-title"><h3 data-blur data-mfs="26" class="h-seg ts">유산균 상세페이지 리뉴얼</h3><span class="badge-ex">예시</span></div>
+            <dl class="psr">
+              <dt>PROBLEM</dt><dd data-mfs="16" class="ts">검색 노출이 낮고 상세페이지 이탈이 많았음</dd>
+              <dt>STRATEGY</dt><dd data-mfs="16" class="ts">구매 의도 키워드 중심으로 상세페이지 구조 재설계</dd>
+              <dt>RESULT</dt><dd data-mfs="16" class="ts">핵심 키워드 첫 화면 진입</dd>
+            </dl>
+            <div class="works-metric"><div class="works-metric-row"><span class="metric-big ts">OO%</span><span class="badge-ex">예시</span></div><span class="metric-label">상세페이지 전환율 변화</span></div>
+          </article>
+        </div>
+        <div data-segwrap class="seg-wrap">
+          <article data-seg="works" data-idx="1" class="seg works-seg">
+            <div class="works-meta"><span class="works-num">02 / 03</span><span class="tag-outline">화장품 · 쿠팡</span></div>
+            <div class="works-title"><h3 data-blur data-mfs="26" class="h-seg ts">세럼 광고 이미지 시리즈</h3><span class="badge-ex">예시</span></div>
+            <dl class="psr">
+              <dt>PROBLEM</dt><dd data-mfs="16" class="ts">광고 클릭률이 낮고 소재 피로도가 높았음</dd>
+              <dt>STRATEGY</dt><dd data-mfs="16" class="ts">심의 기준에 맞춘 메시지로 소재 A/B 테스트</dd>
+              <dt>RESULT</dt><dd data-mfs="16" class="ts">광고 수익률 개선</dd>
+            </dl>
+            <div class="works-metric"><div class="works-metric-row"><span class="metric-big ts">OO%</span><span class="badge-ex">예시</span></div><span class="metric-label">광고 클릭률 변화</span></div>
+          </article>
+        </div>
+        <div data-segwrap class="seg-wrap">
+          <article data-seg="works" data-idx="2" class="seg works-seg">
+            <div class="works-meta"><span class="works-num">03 / 03</span><span class="tag-outline">헬스케어 · 자사몰</span></div>
+            <div class="works-title"><h3 data-blur data-mfs="26" class="h-seg ts">제품 사용 숏폼 운영</h3><span class="badge-ex">예시</span></div>
+            <dl class="psr">
+              <dt>PROBLEM</dt><dd data-mfs="16" class="ts">신규 고객 유입 채널이 부족했음</dd>
+              <dt>STRATEGY</dt><dd data-mfs="16" class="ts">사용 장면 중심 숏폼을 정기 발행</dd>
+              <dt>RESULT</dt><dd data-mfs="16" class="ts">숏폼 유입 매출 발생</dd>
+            </dl>
+            <div class="works-metric"><div class="works-metric-row"><span class="metric-big ts">OO%</span><span class="badge-ex">예시</span></div><span class="metric-label">신규 방문자 변화</span></div>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <!-- 마무리 챕터 텍스트 -->
+    <div id="finLayer" class="layer fin-layer">
+      <h2 data-stage="finale" data-chapter="finale" data-mfs="34" class="stage h-fin ts">이제, 모든 브랜드가<br><span data-breathe class="grad-text">빛날</span> 수 있습니다.</h2>
+    </div>
+
+    <!-- 구간형 챕터 공용 하단 내비게이션 (서비스·작업 사례) -->
+    <nav id="chNav" aria-label="단계 이동" class="ch-nav">
+      <div class="ch-dots"><span data-dot></span><span data-dot></span><span data-dot></span><span data-dot></span><span data-dot></span></div>
+      <div class="ch-row">
+        <button id="chPrev" type="button" class="ch-btn ch-prev"><span class="ch-key">← PREV</span><span id="chPrevT" class="ch-title"></span></button>
+        <a id="chCenter" href="#" class="ch-center">사례 자세히 보기</a>
+        <div class="ch-end">
+          <button id="chNext" type="button" class="ch-btn"><span id="chNextT" class="ch-title"></span><span class="ch-key">NEXT →</span></button>
+          <a id="chAll" href="#" class="ch-all">작업 사례 전체 보기 →</a>
+        </div>
+      </div>
+    </nav>
+    <div class="layer stage-fade"></div>
+    <div id="introSink" class="layer intro-sink"></div>
+  </div>
+
+  <!-- WebGL 미지원·저사양·prefers-reduced-motion 대체 화면 -->
+  <div id="probStatic" class="static-panel static-center">
+    <picture><source media="(max-width: 767px)" srcset="assets/intro/problem-b2-9x16.webp"><img src="assets/intro/problem-b2-16x9.webp" alt="" class="cover"></picture>
+    <div class="cover" style="background:radial-gradient(ellipse at 50% 55%,rgba(11,16,32,0.78) 0%,rgba(11,16,32,0.3) 70%),linear-gradient(180deg,rgba(17,24,39,0) 75%,#111827 100%)"></div>
+    <h2 data-fit data-mfs="38" class="rel h-prob ts">좋은 제품인데,<br>왜 검색하면 보이지 않을까요?</h2>
+    <p data-mfs="18" class="rel p-prob ts">밤하늘의 수많은 행성 중, 우리 눈에 보이는 건 빛을 받는 일부뿐입니다.</p>
+    <ul class="rel static-concerns">
+      <li class="concern">“광고비는 나가는데 효과는 모르겠어요”</li>
+      <li class="concern">“검색하면 대형 브랜드만 보여요”</li>
+      <li class="concern">“광고 심의 표현이 늘 걱정돼요”</li>
+    </ul>
+  </div>
+  <div id="s3" class="static-panel static-name">
+    <picture><source media="(max-width: 767px)" srcset="assets/intro/name-c2-9x16.webp"><img src="assets/intro/name-c2-16x9.webp" alt="" class="cover"></picture>
+    <div class="cover" style="background:linear-gradient(90deg,rgba(11,16,32,0.85) 0%,rgba(11,16,32,0.4) 50%,rgba(11,16,32,0) 75%),linear-gradient(180deg,rgba(11,16,32,0) 45%,rgba(11,16,32,0.6) 80%,#111827 100%)"></div>
+    <div class="rel static-name-inner">
+      <div class="eyebrow">BRAND NAME</div>
+      <div class="name-terms">
+        <div class="name-term"><span class="name-word">DB</span><span class="name-desc">소비자가 찾는 길을 읽는 데이터</span></div>
+        <div class="name-term"><span class="name-word">Planets</span><span class="name-desc">저마다의 빛을 가진 브랜드</span></div>
+      </div>
+      <div class="name-closing">
+        <h2 class="h-name">데이터로 브랜드가 발견되는 순간까지, <span class="grad-text">디비플래닛</span></h2>
+        <a href="#s3" class="link-arrow"><span>브랜드 스토리 더 보기</span><span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+  <div id="s4" class="static-panel static-svc">
+    <div class="static-head"><div class="eyebrow">OUR SERVICE</div><h2 data-mfs="34" class="h-chapter ts">브랜드가 발견되기까지,<br>5단계로 함께합니다</h2></div>
+    <ol class="static-grid static-grid-svc">
+      <li class="glass-card"><span class="step-num step-num-sm">STEP 01</span><span class="card-title">브랜드 진단</span><span class="card-desc">지금 우리 브랜드가 검색에서 어디쯤 보이는지 정확히 알 수 있습니다</span></li>
+      <li class="glass-card"><span class="step-num step-num-sm">STEP 02</span><span class="card-title">키워드 분석</span><span class="card-desc">고객이 실제로 검색하는 단어를 데이터로 찾아냅니다</span></li>
+      <li class="glass-card"><span class="step-num step-num-sm">STEP 03</span><span class="card-title">콘텐츠 제작</span><span class="card-desc">검색에 강한 상세페이지·이미지·숏폼을 광고 심의 기준에 맞춰 만듭니다</span></li>
+      <li class="glass-card"><span class="step-num step-num-sm">STEP 04</span><span class="card-title">광고 운영</span><span class="card-desc">네이버 스마트스토어·쿠팡 광고를 데이터에 따라 운영합니다</span></li>
+      <li class="glass-card"><span class="step-num step-num-sm">STEP 05</span><span class="card-title">월간 성과 리포트</span><span class="card-desc">검색 순위·광고비·매출 변화를 매달 한눈에 확인합니다</span></li>
+    </ol>
+  </div>
+  <div id="worksStatic" class="static-panel static-works">
+    <picture><source media="(max-width: 767px)" srcset="assets/intro/works-e1-9x16.webp"><img src="assets/intro/works-e1-16x9.webp" alt="" class="cover"></picture>
+    <div class="cover" style="background:rgba(11,16,32,0.6)"></div>
+    <div class="rel static-head"><div class="eyebrow">OUR WORK</div><h2 data-mfs="34" class="h-chapter ts">감이 아닌 결과물로<br>보여드립니다</h2></div>
+    <div class="rel static-grid static-grid-works">
+      <article class="glass-card works-card">
+        <div class="works-meta"><span class="works-num works-num-sm">01 / 03</span><span class="tag-outline">건강기능식품 · 스마트스토어</span></div>
+        <div class="works-title"><h3 class="card-title-lg">유산균 상세페이지 리뉴얼</h3><span class="badge-ex">예시</span></div>
+        <dl class="psr psr-sm"><dt>PROBLEM</dt><dd>검색 노출이 낮고 상세페이지 이탈이 많았음</dd><dt>STRATEGY</dt><dd>구매 의도 키워드 중심으로 상세페이지 구조 재설계</dd><dt>RESULT</dt><dd>핵심 키워드 첫 화면 진입</dd></dl>
+        <div class="works-metric-row"><span class="metric-md">OO%</span><span class="badge-ex">예시</span><span class="metric-label-sm">상세페이지 전환율 변화</span></div>
+      </article>
+      <article class="glass-card works-card">
+        <div class="works-meta"><span class="works-num works-num-sm">02 / 03</span><span class="tag-outline">화장품 · 쿠팡</span></div>
+        <div class="works-title"><h3 class="card-title-lg">세럼 광고 이미지 시리즈</h3><span class="badge-ex">예시</span></div>
+        <dl class="psr psr-sm"><dt>PROBLEM</dt><dd>광고 클릭률이 낮고 소재 피로도가 높았음</dd><dt>STRATEGY</dt><dd>심의 기준에 맞춘 메시지로 소재 A/B 테스트</dd><dt>RESULT</dt><dd>광고 수익률 개선</dd></dl>
+        <div class="works-metric-row"><span class="metric-md">OO%</span><span class="badge-ex">예시</span><span class="metric-label-sm">광고 클릭률 변화</span></div>
+      </article>
+      <article class="glass-card works-card">
+        <div class="works-meta"><span class="works-num works-num-sm">03 / 03</span><span class="tag-outline">헬스케어 · 자사몰</span></div>
+        <div class="works-title"><h3 class="card-title-lg">제품 사용 숏폼 운영</h3><span class="badge-ex">예시</span></div>
+        <dl class="psr psr-sm"><dt>PROBLEM</dt><dd>신규 고객 유입 채널이 부족했음</dd><dt>STRATEGY</dt><dd>사용 장면 중심 숏폼을 정기 발행</dd><dt>RESULT</dt><dd>숏폼 유입 매출 발생</dd></dl>
+        <div class="works-metric-row"><span class="metric-md">OO%</span><span class="badge-ex">예시</span><span class="metric-label-sm">신규 방문자 변화</span></div>
+      </article>
+    </div>
+  </div>
+  <div id="finStatic" class="static-panel static-fin">
+    <picture><source media="(max-width: 767px)" srcset="assets/intro/finale-e2-9x16.webp"><img src="assets/intro/finale-e2-16x9.webp" alt="" class="cover"></picture>
+    <div class="cover" style="background:radial-gradient(ellipse at 50% 50%,rgba(11,16,32,0.7) 0%,rgba(11,16,32,0.2) 70%),linear-gradient(180deg,rgba(17,24,39,0) 75%,#111827 100%)"></div>
+    <h2 data-mfs="34" class="rel h-fin ts">이제, 모든 브랜드가<br><span class="grad-text">빛날</span> 수 있습니다.</h2>
+  </div>
+</section>
+<div id="introDebug" class="intro-debug"></div>
+
+<!-- S6 PROOF -->
+<section id="s6" data-screen-label="S6 Proof" class="proof">
+  <div class="proof-fade-in"></div>
+  <div class="container proof-inner">
+    <div class="section-head">
+      <div data-reveal="0" class="eyebrow-light">DATA</div>
+      <h2 data-reveal="100" data-mfs="32" class="h-section">모든 성과를 데이터로 보여드립니다</h2>
+      <p data-reveal="200" data-mfs="17" class="p-section">검색 순위, 광고비, 매출 변화를 매달 리포트로 공유합니다. 숫자마다 쉬운 설명을 붙여 드립니다.</p>
+    </div>
+
+    <!-- dashboard -->
+    <div id="dash" data-reveal="0" class="card dash">
+      <div class="dash-head">
+        <div class="dash-title"><span>브랜드 성과 대시보드</span><span class="badge-ex-light">예시 데이터</span></div>
+        <span class="dash-range">건강기능식품 A 브랜드 · 2026.01 – 2026.06</span>
+      </div>
+
+      <div class="kpis">
+        <div class="kpi kpi-first">
+          <span class="kpi-label">'유산균 추천' 검색 순위</span>
+          <span class="kpi-value"><span id="kRank">48</span><span class="kpi-unit">위</span></span>
+          <span class="kpi-note">48위에서 시작해, 이제 첫 화면에서 바로 보여요.</span>
+        </div>
+        <div class="kpi">
+          <span class="kpi-label">월 매출 성장</span>
+          <span class="kpi-value kpi-accent">+<span id="kGrowth">0</span><span class="kpi-unit kpi-unit-accent">%</span></span>
+          <span class="kpi-note">1월 대비 6월 매출이 3.4배가 되었어요.</span>
+        </div>
+        <div class="kpi kpi-last">
+          <span class="kpi-label">광고 수익률 (ROAS)</span>
+          <span class="kpi-value"><span id="kRoas">0</span><span class="kpi-unit">%</span></span>
+          <span class="kpi-note">광고비 1만 원이 약 8.6만 원의 매출로 돌아와요.</span>
+        </div>
+      </div>
+
+      <div class="charts">
+        <div class="chart">
+          <div class="chart-head"><span class="chart-title">검색 순위 변화</span><span class="chart-hint">위로 갈수록 상위 노출</span></div>
+          <svg viewBox="0 0 600 236" class="rank-chart" role="img" aria-label="검색 순위가 1월 48위에서 6월 4위로 상승">
+            <defs><linearGradient id="areaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4F6BFF" stop-opacity="0.18"></stop><stop offset="1" stop-color="#4F6BFF" stop-opacity="0"></stop></linearGradient><linearGradient id="lineG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4F6BFF"></stop><stop offset="1" stop-color="#8B5CF6"></stop></linearGradient></defs>
+            <g stroke="#EDF0F5" stroke-width="1"><path d="M40 20H580"></path><path d="M40 56.7H580"></path><path d="M40 93.5H580"></path><path d="M40 130.2H580"></path><path d="M40 166.9H580"></path><path d="M40 200H580"></path></g>
+            <g fill="#8A93A6" font-size="11" text-anchor="end" font-family="Pretendard Variable, sans-serif"><text x="30" y="24">1위</text><text x="30" y="60">10위</text><text x="30" y="97">20위</text><text x="30" y="134">30위</text><text x="30" y="171">40위</text><text x="30" y="204">50위</text></g>
+            <g fill="#8A93A6" font-size="11" text-anchor="middle" font-family="Pretendard Variable, sans-serif"><text x="60" y="226">1월</text><text x="160" y="226">2월</text><text x="260" y="226">3월</text><text x="360" y="226">4월</text><text x="460" y="226">5월</text><text x="560" y="226">6월</text></g>
+            <path id="rankArea" d="M60 192.7 L160 130.2 L260 86.1 L360 56.7 L460 38.4 L560 27.3 L560 200 L60 200 Z" fill="url(#areaG)" opacity="0"></path>
+            <path id="rankLine" d="M60 192.7 L160 130.2 L260 86.1 L360 56.7 L460 38.4 L560 27.3" fill="none" stroke="url(#lineG)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"></path>
+            <circle id="rankDot" cx="560" cy="27.3" r="5" fill="#FFFFFF" stroke="#8B5CF6" stroke-width="2.5" opacity="0"></circle>
+          </svg>
+          <p class="chart-note"><span class="note-key">해석</span> · 6개월 만에 검색 첫 화면 상단에 자리 잡았어요.</p>
+        </div>
+        <div class="chart">
+          <div class="chart-head chart-head-wrap">
+            <span class="chart-title">광고비 대비 매출</span>
+            <div class="legend">
+              <span><span class="legend-swatch" style="background:#D5DAE3"></span>광고비</span>
+              <span><span class="legend-swatch" style="background:linear-gradient(135deg,#4F6BFF,#8B5CF6)"></span>매출</span>
+            </div>
+          </div>
+          <!-- data-h: 막대 최종 높이(%) = 금액 / 3200 -->
+          <div class="bars">
+            <div class="bar-pair"><span class="bar bar-spend" data-h="9.4"></span><span class="bar bar-rev" data-h="28.1"></span></div>
+            <div class="bar-pair"><span class="bar bar-spend" data-h="10"></span><span class="bar bar-rev" data-h="37.5"></span></div>
+            <div class="bar-pair"><span class="bar bar-spend" data-h="10.6"></span><span class="bar bar-rev" data-h="50"></span></div>
+            <div class="bar-pair"><span class="bar bar-spend" data-h="10.9"></span><span class="bar bar-rev" data-h="65.6"></span></div>
+            <div class="bar-pair"><span class="bar bar-spend" data-h="11.3"></span><span class="bar bar-rev" data-h="81.3"></span></div>
+            <div class="bar-pair"><span class="bar bar-spend" data-h="11.3"></span><span class="bar bar-rev" data-h="96.9"></span></div>
+          </div>
+          <div class="bar-labels"><span>1월</span><span>2월</span><span>3월</span><span>4월</span><span>5월</span><span>6월</span></div>
+          <p class="chart-note"><span class="note-key">해석</span> · 광고비는 20%만 늘었는데, 매출은 3.4배 커졌어요.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- before / after -->
+    <div class="ba-head">
+      <h3 data-reveal="0" class="h-ba">같은 검색어, 이렇게 달라졌어요</h3>
+      <p data-reveal="100" class="p-ba">가운데 핸들을 좌우로 움직여 비교해 보세요.</p>
+    </div>
+    <div id="baSlider" data-reveal="0" class="card ba" role="slider" tabindex="0" aria-label="전후 비교 위치" aria-valuemin="3" aria-valuemax="97" aria-valuenow="50">
+      <div class="ba-pane">
+        <div class="ba-tag-row"><span class="ba-tag">BEFORE · 1월</span></div>
+        <div class="search-box"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8A93A6" stroke-width="1.5"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span>유산균 추천</span></div>
+        <div class="results">
+          <div class="row"><span class="rank">1</span><span class="thumb"></span><div class="lines"><span class="line1" style="width:78%"></span><span class="line2"></span></div></div>
+          <div class="row"><span class="rank">2</span><span class="thumb"></span><div class="lines"><span class="line1" style="width:64%"></span><span class="line2"></span></div></div>
+          <div class="row"><span class="rank">3</span><span class="thumb"></span><div class="lines"><span class="line1" style="width:72%"></span><span class="line2"></span></div></div>
+          <div class="row"><span class="rank">4</span><span class="thumb"></span><div class="lines"><span class="line1" style="width:58%"></span><span class="line2"></span></div></div>
+          <div class="row"><span class="rank">5</span><span class="thumb"></span><div class="lines"><span class="line1" style="width:68%"></span><span class="line2"></span></div></div>
+          <div class="row-ours-before">
+            <span class="rank rank-dim">27</span>
+            <span class="thumb thumb-empty"></span>
+            <div class="ours-text"><span class="ours-name-dim">우리 브랜드 유산균</span><span class="ours-sub">3페이지 · 거의 노출되지 않음</span></div>
+          </div>
+        </div>
+      </div>
+      <div id="baAfter" class="ba-pane ba-after">
+        <div class="ba-tag-row ba-tag-row-end"><span class="ba-tag ba-tag-accent">AFTER · 6월</span></div>
+        <div class="search-box"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8A93A6" stroke-width="1.5"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><span>유산균 추천</span></div>
+        <div class="results">
+          <div class="row"><span class="rank">1</span><span class="thumb"></span><div class="lines"><span class="line1" style="width:78%"></span><span class="line2"></span></div></div>
+          <div class="row-ours">
+            <span class="rank rank-accent">2</span>
+            <span class="thumb thumb-grad"></span>
+            <div class="ours-text"><span class="ours-name">우리 브랜드 유산균</span><span class="ours-sub-strong">첫 화면 · 리뷰 1,240개</span></div>
+            <span class="ours-delta">▲ 25</span>
+          </div>
+          <div class="row"><span class="rank">3</span><span class="thumb"></span><div class="lines"><span class="line1" style="width:72%"></span><span class="line2"></span></div></div>
+          <div class="row"><span class="rank">4</span><span class="thumb"></span><div class="lines"><span class="line1" style="width:58%"></span><span class="line2"></span></div></div>
+          <div class="row"><span class="rank">5</span><span class="thumb"></span><div class="lines"><span class="line1" style="width:68%"></span><span class="line2"></span></div></div>
+        </div>
+      </div>
+      <div id="baHandle" class="ba-handle"><span class="ba-knob">⇆</span></div>
+    </div>
+
+    <div class="works-all"><a href="#" class="link-underline">작업 사례 전체 보기 →</a></div>
+  </div>
+</section>
+
+<!-- S7 REVIEW -->
+<section id="s7" data-screen-label="S7 Review" class="review">
+  <div class="container">
+    <div data-reveal="0" class="card review-card">
+      <div class="eyebrow-light">CLIENT REVIEW</div>
+      <span class="quote-mark">“</span>
+      <p class="review-text">감각적인 콘텐츠만 잘 만드는 줄 알았는데, 데이터를 바탕으로 전략을 세우고 실제 성과까지 함께 관리해줘서 믿고 맡길 수 있는 마케팅 파트너였어요.</p>
+      <div class="review-by">
+        <span class="review-name">건강기능식품 브랜드 대표</span>
+        <span class="sep-dot"></span>
+        <span class="review-meta">연 매출 30억 원 규모</span>
+        <span class="badge-ex-light">예시 후기</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S8 CTA -->
+<section id="s8" data-screen-label="S8 CTA" class="cta">
+  <picture>
+    <source media="(max-width: 767px)" srcset="assets/img07-cta-9x16.webp">
+    <img src="assets/img07-cta-16x9.webp" alt="" class="cover">
+  </picture>
+  <div class="cover" style="background:radial-gradient(ellipse at center,rgba(11,16,32,0.75) 0%,rgba(11,16,32,0.35) 60%,rgba(11,16,32,0.2) 100%)"></div>
+  <div class="container cta-inner">
+    <div data-reveal="0" class="eyebrow-cta">FREE DIAGNOSIS</div>
+    <h2 data-reveal="100" class="h-cta">이제, 당신의 브랜드가 <span class="grad-text">빛날 차례</span>입니다.</h2>
+    <p data-reveal="150" data-mfs="17" class="p-cta">진단부터 운영까지, 한 팀이 끝까지 함께합니다.</p>
+
+    <div data-reveal="200" class="cta-card">
+      <form id="diagForm" class="diag-form" novalidate>
+        <label class="field"><span class="field-label">브랜드명</span>
+          <input name="brand" placeholder="예) 디비헬스" autocomplete="organization"></label>
+        <label class="field"><span class="field-label">제품 키워드</span>
+          <input name="keyword" placeholder="예) 유산균, 콜라겐"></label>
+        <label class="field"><span class="field-label">연락처</span>
+          <input name="contact" placeholder="휴대폰 번호 또는 이메일"></label>
+        <span id="diagErr" class="form-err" role="alert" hidden></span>
+        <button type="submit" class="btn-primary">무료 브랜드 검색 진단 신청</button>
+        <p class="form-note">입력 후 영업일 기준 1일 내 진단 결과를 보내드립니다</p>
+      </form>
+      <div id="diagDone" class="diag-done" hidden>
+        <span class="done-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L19 7"></path></svg></span>
+        <span class="done-title">신청이 접수되었습니다</span>
+        <span class="done-text"><span id="diagBrand"></span>의 검색 진단 결과를<br>영업일 기준 1일 내 보내드릴게요.</span>
+      </div>
+    </div>
+
+    <div data-reveal="300" class="newsletter">
+      <span class="newsletter-lead">바로 신청이 부담스럽다면, 월간 마케팅 인사이트부터 받아보세요.</span>
+      <form id="newsForm" class="news-form">
+        <input type="email" name="email" required placeholder="이메일 주소" aria-label="이메일 주소">
+        <button type="submit">뉴스레터 구독 →</button>
+      </form>
+      <span id="newsDone" class="news-done" hidden>구독해 주셔서 감사합니다. 다음 호에서 만나요.</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <span class="logo"><span class="logo-dot"></span><span class="logo-text">DB PLANET</span></span>
+        <span class="footer-tagline">보이지 않던 브랜드에, 빛을.<br>뷰티·헬스케어 이커머스 마케팅</span>
+      </div>
+      <div class="footer-col footer-links">
+        <span class="footer-label">MENU</span>
+        <a href="#s3">브랜드 스토리</a><a href="#s4">서비스</a><a href="#s6">작업 사례</a><a href="#s7">인사이트</a><a href="#s8">무료 진단 신청</a>
+      </div>
+      <div class="footer-col footer-info">
+        <span class="footer-label">COMPANY</span>
+        <span>(주)디비플래닛 · 대표 OOO</span><span>사업자등록번호 000-00-00000</span><span>서울특별시 OO구 OO로 00</span>
+      </div>
+      <div class="footer-col footer-info">
+        <span class="footer-label">CONTACT</span>
+        <span>hello@dbplanet.kr</span><span>02-000-0000</span><a href="#s8">뉴스레터 구독 →</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 DB PLANET. All rights reserved.</span>
+      <div class="footer-legal"><a href="#s1">개인정보처리방침</a><a href="#s1">이용약관</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE FAB -->
+<a id="fab" href="#s8" class="fab" hidden>무료 진단 신청</a>
+
+</div>
+</body>
+</html>

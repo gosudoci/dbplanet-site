@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DB PLANET 버전 비교</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+  :root { --bg: #0B1020; --bg-2: #141B30; --bg-3: #1C2440; --ink: #FFFFFF; --soft: #C5CBD8; --accent: #4F6BFF; --margin: clamp(20px, 4vw, 56px) }
+  * { box-sizing: border-box }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Pretendard Variable", Pretendard, system-ui, sans-serif; font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; word-break: keep-all }
+  a { color: inherit }
+  img { display: block; width: 100% }
+  .wrap { max-width: 1440px; margin: 0 auto; padding: 0 var(--margin) }
+  header.wrap { padding-top: 72px; padding-bottom: 48px }
+  h1 { margin: 0; font-size: clamp(36px, 4.4vw, 64px); line-height: 1.1; font-weight: 800; letter-spacing: -0.035em }
+  .lead { margin: 20px 0 0; max-width: 46em; font-size: 19px; color: var(--soft) }
+  h2 { margin: 0 0 20px; font-size: clamp(26px, 2.4vw, 36px); line-height: 1.2; font-weight: 800; letter-spacing: -0.03em }
+
+  /* 같은 장면 비교 */
+  .compare.wrap { padding-top: 32px; padding-bottom: 96px }
+  .scenes { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px }
+  .scenes button { height: 42px; padding: 0 18px; border: 0; border-radius: 999px; background: var(--bg-2); color: var(--soft); font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; transition: background-color .2s ease, color .2s ease }
+  .scenes button:hover { color: #FFFFFF }
+  .scenes button[aria-pressed="true"] { background: #FFFFFF; color: var(--bg) }
+  .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px }
+  .trio figure { margin: 0; display: flex; flex-direction: column; gap: 10px }
+  .trio img { aspect-ratio: 16 / 10; object-fit: cover; background: var(--bg-2); cursor: zoom-in }
+  .trio figcaption { font-size: 15px; font-weight: 700 }
+  .trio figcaption span { font-weight: 500; color: var(--soft) }
+
+  /* 버전 카드 */
+  .version { padding: 72px 0; background: var(--bg-2) }
+  .version:nth-of-type(even) { background: var(--bg) }
+  .v-head { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: start }
+  .v-text { grid-column: 1 / span 5; display: flex; flex-direction: column; gap: 18px }
+  .v-title { margin: 0; font-size: clamp(30px, 3vw, 46px); line-height: 1.1; font-weight: 800; letter-spacing: -0.035em }
+  .v-title small { display: block; margin-top: 8px; font-size: 17px; font-weight: 600; letter-spacing: 0; color: var(--soft) }
+  .v-text ul { margin: 0; padding-left: 1.1em; display: flex; flex-direction: column; gap: 8px }
+  .v-text li::marker { color: var(--accent) }
+  .v-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 6px }
+  .btn { display: inline-flex; align-items: center; height: 48px; padding: 0 24px; border-radius: 999px; background: var(--accent); color: #FFFFFF; font-size: 15px; font-weight: 700; text-decoration: none; transition: transform .2s ease }
+  .btn:hover { transform: translateY(-1px) }
+  .path { font-size: 14px; color: var(--soft) }
+  .path code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; background: var(--bg-3); padding: 3px 7px; border-radius: 6px; color: #FFFFFF }
+  .v-hero { grid-column: 6 / span 7 }
+  .v-hero img { aspect-ratio: 16 / 10; object-fit: cover; cursor: zoom-in }
+  .strip { margin-top: 24px; display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px }
+  .strip img { aspect-ratio: 16 / 10; object-fit: cover; cursor: zoom-in; opacity: .9; transition: opacity .2s ease }
+  .strip img:hover { opacity: 1 }
+  .now { display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; background: var(--accent); font-size: 13px; font-weight: 700; vertical-align: middle; margin-left: 10px; letter-spacing: 0 }
+
+  footer.wrap { padding-top: 64px; padding-bottom: 80px; color: var(--soft); font-size: 15px }
+  footer p { margin: 0 0 8px }
+
+  /* 크게 보기 */
+  dialog { padding: 0; border: 0; background: transparent; max-width: min(96vw, 1600px) }
+  dialog::backdrop { background: rgba(5,7,13,0.92) }
+  dialog img { max-height: 90vh; width: auto; max-width: 100%; margin: 0 auto }
+  dialog p { margin: 12px 0 0; text-align: center; color: var(--soft); font-size: 15px }
+
+  @media (max-width: 900px) {
+    .trio { grid-template-columns: repeat(2, 1fr) }
+    .v-text, .v-hero { grid-column: 1 / -1 }
+    .strip { grid-template-columns: repeat(2, 1fr) }
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <h1>DB PLANET 메인 페이지 버전 비교</h1>
+  <p class="lead">지금까지 만든 모든 버전을 같은 장면끼리 나란히 놓았습니다. 장면을 고르면 모든 버전이 함께 바뀌고, 사진을 누르면 크게 볼 수 있습니다. 각 버전은 아래 카드의 버튼으로 실제 사이트를 열어 볼 수 있습니다.</p>
+</header>
+
+<section class="compare wrap" aria-labelledby="cmp-title">
+  <h2 id="cmp-title">같은 장면 비교</h2>
+  <div class="scenes" role="group" aria-label="장면 선택">
+    <button type="button" data-scene="1-hero" aria-pressed="true">첫 화면</button>
+    <button type="button" data-scene="2-problem">문제 제기</button>
+    <button type="button" data-scene="3-name">브랜드 이름</button>
+    <button type="button" data-scene="4-service">서비스 단계</button>
+    <button type="button" data-scene="5-proof">성과 데이터</button>
+    <button type="button" data-scene="5b-voice">고객 후기</button>
+    <button type="button" data-scene="6-cta">무료 진단 신청</button>
+  </div>
+  <div class="trio">
+    <figure><img data-v="v1" src="shots/v1/1-hero.jpg" alt="v1 첫 화면"><figcaption>v1 <span>원본 옮김</span></figcaption></figure>
+    <figure><img data-v="v2" src="shots/v2/1-hero.jpg" alt="v2 첫 화면"><figcaption>v2 <span>디자인 개선</span></figcaption></figure>
+    <figure><img data-v="v3" src="shots/v3/1-hero.jpg" alt="v3 첫 화면"><figcaption>v3 <span>인트로 리뉴얼</span></figcaption></figure>
+    <figure><img data-v="v4" src="shots/v4/1-hero.jpg" alt="v4 첫 화면"><figcaption>v4 <span>마지막 두 섹션</span></figcaption></figure>
+    <figure><img data-v="v5" src="shots/v5/1-hero.jpg" alt="v5 첫 화면"><figcaption>v5 <span>6개월 리포트</span></figcaption></figure>
+    <figure><img data-v="v6" src="shots/v6/1-hero.jpg" alt="v6 첫 화면"><figcaption>v6 <span>6개월 섹션 뺌</span></figcaption></figure>
+    <figure><img data-v="v7" src="shots/v7/1-hero.jpg" alt="v7 첫 화면"><figcaption>v7 <span>달 · 이어지는 카메라</span></figcaption></figure>
+    <figure><img data-v="v8" src="shots/v8/1-hero.jpg" alt="v8 첫 화면"><figcaption>v8 <span>달 밝기 자연스럽게</span></figcaption></figure>
+    <figure><img data-v="v9" src="shots/v9/1-hero.jpg" alt="v9 첫 화면"><figcaption>v9 <span>제목 빛 채움</span></figcaption></figure>
+    <figure><img data-v="v10" src="shots/v10/1-hero.jpg" alt="v10 첫 화면"><figcaption>v10 <span>카테고리 섹션 뺌</span></figcaption></figure>
+    <figure><img data-v="v11" src="shots/v11/1-hero.jpg" alt="v11 첫 화면"><figcaption>v11 <span>사례 결과물 예시</span></figcaption></figure>
+    <figure><img data-v="v12" src="shots/v12/1-hero.jpg" alt="v12 첫 화면"><figcaption>v12 <span>평평한 사례 패널</span></figcaption></figure>
+    <figure><img data-v="v13" src="shots/v13/1-hero.jpg" alt="v13 첫 화면"><figcaption>v13 <span>호버 채움 · 후기·신청 정리</span></figcaption></figure>
+    <figure><img data-v="v14" src="shots/v14/1-hero.jpg" alt="v14 첫 화면"><figcaption>v14 <span>도는 일식 빛</span></figcaption></figure>
+    <figure><img data-v="v15" src="shots/v15/1-hero.jpg" alt="v15 첫 화면"><figcaption>v15 <span>후기 바탕 구분</span></figcaption></figure>
+    <figure><img data-v="v16" src="shots/v16/1b-hover.jpg" alt="v16 첫 화면 호버"><figcaption>v16 <span>파랑 호버 채움</span></figcaption></figure>
+    <figure><img data-v="v17" src="shots/v17/1b-hover.jpg" alt="v17 첫 화면 호버"><figcaption>v17 <span>은색 광택 호버</span></figcaption></figure>
+    <figure><img data-v="v18" src="shots/v18/1b-hover.jpg" alt="v18 첫 화면 호버"><figcaption>v18 <span>은색 글자 · 흰빛 스침</span></figcaption></figure>
+    <figure><img data-v="v19" src="shots/v19/3-name.jpg" alt="v19 브랜드 스토리"><figcaption>v19 <span>브랜드 스토리 천천히</span></figcaption></figure>
+    <figure><img data-v="v20" src="shots/v20/3b-service.jpg" alt="v20 서비스 제목"><figcaption>v20 <span>서비스 제목 오래</span></figcaption></figure>
+    <figure><img data-v="v21" src="shots/v21/3b-service.jpg" alt="v21 서비스 제목"><figcaption>v21 <span>스크롤·호버 흰빛 · 현재</span></figcaption></figure>
+    <figure><img data-v="v22" src="shots/v22/1-hero.jpg" alt="v22 첫 화면"><figcaption>v22 <span>Magnific 코로나 영상 · 되돌림</span></figcaption></figure>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v22-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v22-title" class="v-title">v22 · Magnific 코로나 영상 (되돌림)<small>첫 화면 일식 빛을 Magnific(Kling 3.0) 영상으로</small></h2>
+        <ul>
+          <li>Magnific으로 만든 10초 영상: 밝은 빛이 원 둘레를 시계 방향으로 한 바퀴 돌며 보라 → 장밋빛 → 호박빛 → 푸른빛으로 바뀜</li>
+          <li>영상을 3D 장면의 일식 뒤에 깔아서, 앞을 지나는 행성에 자연스럽게 가려짐</li>
+          <li>원 위에 마우스를 올리면 영상이 빨라지고, 스크롤하면 그만큼 빛이 앞뒤로 돎</li>
+          <li>영상 속 가는 빛줄기는 빗금처럼 보이지 않게 둘레 방향으로 살짝 흐림, 1.7MB로 압축</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v22/">v22 열기</a>
+          <span class="path"><code>versions/v22</code> · 보고 나서 v21로 되돌림</span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v22/1-hero.jpg" alt="v22 첫 화면"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v22/1-hero.jpg" alt="v22 첫 화면"><img src="shots/v22/1b-hover.jpg" alt="v22 호버"><img src="shots/v22/3-name.jpg" alt="v22 브랜드 스토리"><img src="shots/v22/3b-service.jpg" alt="v22 서비스 제목"><img src="shots/v22/5b-voice.jpg" alt="v22 고객 후기"><img src="shots/v22/6-cta.jpg" alt="v22 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v21-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v21-title" class="v-title">v21 · 스크롤·호버 흰빛 <span class="now">현재</span><small>흰빛 스침이 스크롤로 나타날 때도</small></h2>
+        <ul>
+          <li>큰 제목이 스크롤로 화면에 나타나는 순간 흰빛 띠가 한 번 지나감 (첫 화면 제목은 페이지가 열릴 때, 맨 위로 돌아올 때도)</li>
+          <li>마우스를 올리면 다시 한 번 지나감, 떼도 되돌아가지 않음</li>
+          <li>상단 메뉴는 호버할 때만</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v21/">v21 열기</a>
+          <span class="path"><code>versions/v21</code> · 루트의 사이트와 같은 버전 (v22에서 되돌아옴)</span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v21/3b-service.jpg" alt="v21 서비스 제목"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v21/1-hero.jpg" alt="v21 첫 화면"><img src="shots/v21/3-name.jpg" alt="v21 브랜드 스토리"><img src="shots/v21/3b-service.jpg" alt="v21 서비스 제목"><img src="shots/v21/4b-works.jpg" alt="v21 작업 사례"><img src="shots/v21/5b-voice.jpg" alt="v21 고객 후기"><img src="shots/v21/6-cta.jpg" alt="v21 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v20-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v20-title" class="v-title">v20 · 서비스 제목 오래<small>"브랜드가 발견되기까지, 다섯 단계로 함께합니다"가 빨리 지나가서</small></h2>
+        <ul>
+          <li>서비스 다섯 단계 앞 제목 화면이 머무는 스크롤 길이를 화면 약 0.5장 → 약 1.5장으로</li>
+          <li>제목이 다 읽히기 전에 첫 단계(브랜드 진단)로 끌려가던 자동 맞춤도 그만큼 뒤로 밀림</li>
+          <li>다섯 단계 각각의 길이는 그대로</li>
+          <li>v19에서 늘린 브랜드 스토리 길이는 원래대로 되돌림</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v20/">v20 열기</a>
+          <span class="path"><code>versions/v20</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v20/3b-service.jpg" alt="v20 서비스 제목"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v20/1-hero.jpg" alt="v20 첫 화면"><img src="shots/v20/3-name.jpg" alt="v20 브랜드 스토리"><img src="shots/v20/3b-service.jpg" alt="v20 서비스 제목"><img src="shots/v20/4b-works.jpg" alt="v20 작업 사례"><img src="shots/v20/5b-voice.jpg" alt="v20 고객 후기"><img src="shots/v20/6-cta.jpg" alt="v20 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v19-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v19-title" class="v-title">v19 · 브랜드 스토리 천천히<small>DB / Planets 구간이 너무 빨리 넘어가서</small></h2>
+        <ul>
+          <li>브랜드 스토리(DB → Planets → 마무리 문장) 구간의 스크롤 길이를 화면 3장 → 4.6장으로 약 1.5배</li>
+          <li>장면 순서와 타이밍 비율은 그대로라, 문장 하나하나와 달이 빛나고 궤도가 그려지는 순간이 더 오래 머묾</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v19/">v19 열기</a>
+          <span class="path"><code>versions/v19</code> · 요청을 잘못 짚은 버전, v20에서 되돌림</span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v19/3-name.jpg" alt="v19 브랜드 스토리"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v19/1-hero.jpg" alt="v19 첫 화면"><img src="shots/v19/1b-hover.jpg" alt="v19 제목 호버"><img src="shots/v19/3-name.jpg" alt="v19 브랜드 스토리"><img src="shots/v19/4b-works.jpg" alt="v19 작업 사례"><img src="shots/v19/5b-voice.jpg" alt="v19 고객 후기"><img src="shots/v19/6-cta.jpg" alt="v19 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v18-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v18-title" class="v-title">v18 · 은색 글자 · 흰빛 스침<small>v17의 회색 띠가 그림자처럼 보여서 밝기를 뒤집음</small></h2>
+        <ul>
+          <li>큰 제목·상단 메뉴의 평소 글자를 은회색(#BFC5CF)으로</li>
+          <li>마우스를 올리면 그 위로 은은하게 빛나는 흰빛 띠가 왼쪽에서 오른쪽으로 스쳐 지나감 → 그림자가 아니라 빛이 지나가는 느낌</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v18/">v18 열기</a>
+          <span class="path"><code>versions/v18</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v18/1b-hover.jpg" alt="v18 제목 호버"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v18/1-hero.jpg" alt="v18 첫 화면"><img src="shots/v18/1b-hover.jpg" alt="v18 제목 호버"><img src="shots/v18/3-name.jpg" alt="v18 브랜드 이름"><img src="shots/v18/4b-works.jpg" alt="v18 작업 사례"><img src="shots/v18/5b-voice.jpg" alt="v18 고객 후기"><img src="shots/v18/6-cta.jpg" alt="v18 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v17-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v17-title" class="v-title">v17 · 은색 광택 호버<small>파랑 채움이 어두워 보이고 페이지 톤과 어긋나서 회색 계열로</small></h2>
+        <ul>
+          <li>큰 제목·상단 메뉴에 마우스를 올리면 흰 글자 위로 은회색 광택 띠가 왼쪽에서 오른쪽으로 지나감 (달 표면 같은 금속 느낌)</li>
+          <li>평소 글자는 또렷한 흰색 그대로, 띠가 지나간 뒤에도 흰색</li>
+          <li>여러 줄 제목은 줄마다 조금씩 늦게 지나감, 떼면 띠가 되돌아감</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v17/">v17 열기</a>
+          <span class="path"><code>versions/v17</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v17/1b-hover.jpg" alt="v17 제목 호버"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v17/1-hero.jpg" alt="v17 첫 화면"><img src="shots/v17/1b-hover.jpg" alt="v17 제목 호버"><img src="shots/v17/3-name.jpg" alt="v17 브랜드 이름"><img src="shots/v17/4b-works.jpg" alt="v17 작업 사례"><img src="shots/v17/5b-voice.jpg" alt="v17 고객 후기"><img src="shots/v17/6-cta.jpg" alt="v17 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v16-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v16-title" class="v-title">v16 · 파랑 호버 채움<small>제목·메뉴 호버 채움 색을 파랑 그라데이션으로</small></h2>
+        <ul>
+          <li>큰 제목과 상단 메뉴에 마우스를 올리면 채워지는 색: 일식 빛(분홍·보라·주황) → 파랑 그라데이션</li>
+          <li>연한 하늘색 → 브랜드 파랑(버튼 색 #4F6BFF) → 밝은 하늘색 순서</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v16/">v16 열기</a>
+          <span class="path"><code>versions/v16</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v16/1b-hover.jpg" alt="v16 제목 호버"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v16/1-hero.jpg" alt="v16 첫 화면"><img src="shots/v16/1b-hover.jpg" alt="v16 제목 호버"><img src="shots/v16/3-name.jpg" alt="v16 브랜드 이름"><img src="shots/v16/4b-works.jpg" alt="v16 작업 사례"><img src="shots/v16/5b-voice.jpg" alt="v16 고객 후기"><img src="shots/v16/6-cta.jpg" alt="v16 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v15-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v15-title" class="v-title">v15 · 후기 바탕 구분<small>고객 후기와 무료 진단 사이에 바탕색 경계</small></h2>
+        <ul>
+          <li>고객 후기 바탕을 한 톤 밝은 남색(#0E1320)으로, 무료 진단은 검정 그대로 → 두 섹션 사이에 경계가 생김</li>
+          <li>고객 후기 아래 여백을 넣어 경계 위아래가 같은 간격</li>
+          <li>고객 후기의 성과 숫자 3개(검색 순위·월 매출·광고 수익률) 삭제</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v15/">v15 열기</a>
+          <span class="path"><code>versions/v15</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v15/6-cta.jpg" alt="v15 후기와 무료 진단 경계"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v15/1-hero.jpg" alt="v15 첫 화면"><img src="shots/v15/3-name.jpg" alt="v15 브랜드 이름"><img src="shots/v15/4b-works.jpg" alt="v15 작업 사례"><img src="shots/v15/5-proof.jpg" alt="v15 성과 데이터"><img src="shots/v15/5b-voice.jpg" alt="v15 고객 후기"><img src="shots/v15/6-cta.jpg" alt="v15 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v14-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v14-title" class="v-title">v14 · 도는 일식 빛<small>레퍼런스 영상(동그란 원 둘레를 도는 빛) 반영</small></h2>
+        <ul>
+          <li>첫 화면 일식 둘레의 밝은 빛이 일정한 속도로 원을 따라 돎 (시계 방향, 한 바퀴 약 18초)</li>
+          <li>원 위에 마우스를 올리면 빛이 부드럽게 빨라짐 (약 4배), 떼면 원래 속도로</li>
+          <li>스크롤 내리면 시계 방향, 올리면 반대 방향으로 스크롤 양만큼 돌아 왔다 갔다 함</li>
+          <li>빛이 한쪽으로 더 모이도록 밝은 쪽·어두운 쪽 대비를 조금 키움</li>
+          <li>빛과 함께 돌던 경계선·빗금, 배경의 사선 결 제거</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v14/">v14 열기</a>
+          <span class="path"><code>versions/v14</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v14/1b-hover.jpg" alt="v14 첫 화면 호버"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v14/1-hero.jpg" alt="v14 첫 화면"><img src="shots/v14/1b-hover.jpg" alt="v14 호버 시 빛 위치"><img src="shots/v14/3-name.jpg" alt="v14 브랜드 이름"><img src="shots/v14/4b-works.jpg" alt="v14 작업 사례"><img src="shots/v14/5b-voice.jpg" alt="v14 고객 후기"><img src="shots/v14/6-cta.jpg" alt="v14 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v13-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v13-title" class="v-title">v13 · 호버 채움 · 후기와 신청 정리<small>Santal·blink 참고, design-taste-frontend 스킬 규칙으로 다듬음</small></h2>
+        <ul>
+          <li>큰 제목 빛 채움을 호버할 때만 (평소엔 또렷한 흰 글자), 상단 메뉴에도 적용</li>
+          <li>고객 후기: 말풍선 → 큰 인용문, 스크롤하면 단어가 흐린 회색에서 흰색으로 채워짐 (Santal) + 성과 숫자 3개</li>
+          <li>고객 후기 그리드: 제목은 왼쪽 칸, 인용문·숫자는 오른쪽 넓은 칸</li>
+          <li>무료 진단: 검색 진단 예시 미리보기 삭제, 카드 없앤 밑줄형 입력, 큰 제목, 지평선을 폼 바로 아래로</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v13/">v13 열기</a>
+          <span class="path"><code>versions/v13</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v13/5b-voice.jpg" alt="v13 고객 후기"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v13/1-hero.jpg" alt="v13 첫 화면"><img src="shots/v13/3-name.jpg" alt="v13 브랜드 이름"><img src="shots/v13/4b-works.jpg" alt="v13 작업 사례"><img src="shots/v13/5-proof.jpg" alt="v13 성과 데이터"><img src="shots/v13/5b-voice.jpg" alt="v13 고객 후기"><img src="shots/v13/6-cta.jpg" alt="v13 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v12-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v12-title" class="v-title">v12 · 사례 패널을 평평하게<small>곡면 모니터처럼 휘어 있던 휴대폰 화면 패널을 평면으로</small></h2>
+        <ul>
+          <li>엔진이 패널 양끝을 뒤로 휘게 만들던 처리를 없애 네 변이 곧은 평평한 화면으로</li>
+          <li>카메라가 비스듬히 보는 원근감은 그대로 (정면으로 맞추는 것도 가능)</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v12/">v12 열기</a>
+          <span class="path"><code>versions/v12</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v12/4b-works.jpg" alt="v12 작업 사례"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v12/1-hero.jpg" alt="v12 첫 화면"><img src="shots/v12/3-name.jpg" alt="v12 브랜드 이름"><img src="shots/v12/4-service.jpg" alt="v12 서비스 단계"><img src="shots/v12/4b-works.jpg" alt="v12 작업 사례"><img src="shots/v12/5-proof.jpg" alt="v12 성과 데이터"><img src="shots/v12/6-cta.jpg" alt="v12 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v11-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v11-title" class="v-title">v11 · 작업 사례 결과물 예시<small>비어 있던 사례 패널 3개를 Magnific 예시로 채움</small></h2>
+        <ul>
+          <li>유산균 상세페이지 리뉴얼 → 스마트스토어 상세페이지 시안 ("바이오밸런스", GPT 2)</li>
+          <li>세럼 광고 이미지 시리즈 → 세럼 광고 이미지 ("속부터 채우는 72시간 수분", GPT 2)</li>
+          <li>제품 사용 숏폼 운영 → 5초 세로 숏폼 영상 (Kling 2.5), 패널 안에서 자동 재생·반복</li>
+          <li>3D가 없는 정적 화면의 사례 카드에도 썸네일</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v11/">v11 열기</a>
+          <span class="path"><code>versions/v11</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v11/4b-works.jpg" alt="v11 작업 사례"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v11/1-hero.jpg" alt="v11 첫 화면"><img src="shots/v11/3-name.jpg" alt="v11 브랜드 이름"><img src="shots/v11/4-service.jpg" alt="v11 서비스 단계"><img src="shots/v11/4b-works.jpg" alt="v11 작업 사례"><img src="shots/v11/5-proof.jpg" alt="v11 성과 데이터"><img src="shots/v11/6-cta.jpg" alt="v11 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v10-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v10-title" class="v-title">v10 · 카테고리 섹션 뺌<small>"뷰티·헬스케어 브랜드를 위한 팀입니다" 제거</small></h2>
+        <ul>
+          <li>카테고리 사진 섹션(영양제·크림·비타민)과 관련 스타일 제거</li>
+          <li>3D 인트로 끝의 남색 페이드를 없애, 빈 화면 없이 행성 전경이 올라가고 성과 데이터가 바로 이어짐</li>
+          <li>흐름: 3D 인트로 → 성과 데이터 → 고객 메시지 → 무료 진단 신청</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v10/">v10 열기</a>
+          <span class="path"><code>versions/v10</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v10/5-proof.jpg" alt="v10 성과 데이터"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v10/1-hero.jpg" alt="v10 첫 화면"><img src="shots/v10/3-name.jpg" alt="v10 브랜드 이름"><img src="shots/v10/4-service.jpg" alt="v10 서비스 단계"><img src="shots/v10/5-proof.jpg" alt="v10 성과 데이터"><img src="shots/v10/5b-voice.jpg" alt="v10 고객 후기"><img src="shots/v10/6-cta.jpg" alt="v10 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v9-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v9-title" class="v-title">v9 · 큰 제목 빛 채움<small>NIGHT FLIGHT 메뉴 호버 모션 참고 · 일식 빛 색</small></h2>
+        <ul>
+          <li>첫 화면 제목과 3D 장면 속 큰 제목 4개(정적 화면 포함)에 적용</li>
+          <li>평소엔 은은한 흰 글자, 화면에 나타나면 일식 빛(흰 → 로즈 → 라벤더 → 앰버)이 왼쪽부터 부드러운 경계로 채워짐</li>
+          <li>두 줄 제목은 한 줄씩 차례로 (줄마다 0.35초 간격, 0.9초씩)</li>
+          <li>데스크톱에서 마우스를 올리면 빛이 다시 지나감 · 사라졌다 다시 나타나면 다시 채워짐</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v9/">v9 열기</a>
+          <span class="path"><code>versions/v9</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v9/2-problem.jpg" alt="v9 문제 제기"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v9/1-hero.jpg" alt="v9 첫 화면"><img src="shots/v9/3-name.jpg" alt="v9 브랜드 이름"><img src="shots/v9/4-service.jpg" alt="v9 서비스 단계"><img src="shots/v9/5-proof.jpg" alt="v9 성과 데이터"><img src="shots/v9/5b-voice.jpg" alt="v9 고객 후기"><img src="shots/v9/6-cta.jpg" alt="v9 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v8-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v8-title" class="v-title">v8 · 달 밝기를 자연스럽게<small>서비스 단계에서 하얗게 날아가던 달을 실제 사진 같은 회색으로</small></h2>
+        <ul>
+          <li>달 표면 반사를 낮춰 밝은 면이 흰색으로 포화되지 않게</li>
+          <li>서비스 단계마다 밝아지던 폭을 최대 1.6배 → 1.15배로</li>
+          <li>빛과 그림자 경계를 부드럽게, 가장자리로 갈수록 은은하게 어둡게</li>
+          <li>빛이 단계적으로 퍼지는 흐름은 그대로: 어두운 회색 → 마지막 단계에서 달 사진처럼</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v8/">v8 열기</a>
+          <span class="path"><code>versions/v8</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v8/4-service.jpg" alt="v8 서비스 단계"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v8/1-hero.jpg" alt="v8 첫 화면"><img src="shots/v8/2-problem.jpg" alt="v8 문제 제기"><img src="shots/v8/3-name.jpg" alt="v8 브랜드 이름"><img src="shots/v8/5-proof.jpg" alt="v8 성과 데이터"><img src="shots/v8/5b-voice.jpg" alt="v8 고객 후기"><img src="shots/v8/6-cta.jpg" alt="v8 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v7-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v7-title" class="v-title">v7 · 브랜드 행성을 달로<small>DB / Planets 장면의 주인공 행성 교체, 카메라 전환을 부드럽게</small></h2>
+        <ul>
+          <li>이름 챕터부터 서비스까지 이어지는 우리 행성을 달 표면으로 (Magnific 달 지도 + 굴곡 지도)</li>
+          <li>달의 바다(어두운 무늬)가 빛 받는 쪽에 보이도록 방향 고정, 명암 대비를 키움</li>
+          <li>문제 → 이름 챕터: 멀리 → 중간 → 가까이로, 다가가는 구간을 약 2배로 늘림</li>
+          <li>이름 → 서비스 챕터: 클로즈업에서 궤도 화면으로 빠지는 구간을 늘림</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v7/">v7 열기</a>
+          <span class="path"><code>versions/v7</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v7/3-name.jpg" alt="v7 브랜드 이름"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v7/1-hero.jpg" alt="v7 첫 화면"><img src="shots/v7/2-problem.jpg" alt="v7 문제 제기"><img src="shots/v7/4-service.jpg" alt="v7 서비스 단계"><img src="shots/v7/5-proof.jpg" alt="v7 성과 데이터"><img src="shots/v7/5b-voice.jpg" alt="v7 고객 후기"><img src="shots/v7/6-cta.jpg" alt="v7 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v6-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v6-title" class="v-title">v6 · 6개월 섹션 뺌<small>v5에서 "이 브랜드와 함께한 6개월"을 제거</small></h2>
+        <ul>
+          <li>"이 브랜드와 함께한 6개월" 섹션과 관련 스타일·스크립트 제거</li>
+          <li>고객 메시지(검정)에서 무료 진단 신청(검정)으로 바로 이어지도록 사이 간격을 한 번으로</li>
+          <li>나머지는 v5와 같음</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v6/">v6 열기</a>
+          <span class="path"><code>versions/v6</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v6/5b-voice.jpg" alt="v6 고객 후기"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v6/1-hero.jpg" alt="v6 첫 화면"><img src="shots/v6/3-name.jpg" alt="v6 브랜드 이름"><img src="shots/v6/4-service.jpg" alt="v6 서비스 단계"><img src="shots/v6/5-proof.jpg" alt="v6 성과 데이터"><img src="shots/v6/5b-voice.jpg" alt="v6 고객 후기"><img src="shots/v6/6-cta.jpg" alt="v6 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v5-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v5-title" class="v-title">v5 · 6개월을 리포트 화면으로<small>v4의 스토리 카드 대신, 성과 대시보드와 같은 모양의 월별 순위</small></h2>
+        <ul>
+          <li>"이 브랜드와 함께한 6개월"을 스토리 카드에서 밝은 리포트 카드로 (성과 대시보드와 같은 디자인)</li>
+          <li>달마다 순위(48 → 31 → 19 → 11 → 6 → 3위), 막대, 그달에 한 일. 10위 안은 파랑, 6월은 진한 파랑</li>
+          <li>막대는 화면에 들어오면 아래에서 자람</li>
+          <li>고객 메시지(검은 바탕)와 무료 진단 신청(행성 지평선)은 v4 그대로</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v5/">v5 열기</a>
+          <span class="path"><code>versions/v5</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v5/5c-journey.jpg" alt="v5 이 브랜드와 함께한 6개월"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v5/1-hero.jpg" alt="v5 첫 화면"><img src="shots/v5/4-service.jpg" alt="v5 서비스 단계"><img src="shots/v5/5-proof.jpg" alt="v5 성과 데이터"><img src="shots/v5/5b-voice.jpg" alt="v5 고객 후기"><img src="shots/v5/5c-journey.jpg" alt="v5 함께한 6개월"><img src="shots/v5/6-cta.jpg" alt="v5 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v4-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v4-title" class="v-title">v4 · 마지막 두 섹션<small>blink.capital의 인터랙션 참고 · Magnific 행성 지평선</small></h2>
+        <ul>
+          <li>고객 후기를 메시지 세 통으로: 하나씩 도착하고 한 단어씩 보이며, 앞의 메시지는 어두워짐</li>
+          <li>"이 브랜드와 함께한 6개월" 스토리 카드 5장: 화면이 고정된 채 옆으로 넘어가고, 앞에 온 카드가 밝아짐 (휴대폰은 손가락으로 넘김)</li>
+          <li>무료 진단 신청: 검은 바탕 아래로 행성 지평선이 떠오름</li>
+          <li>받게 될 진단 리포트 미리보기: 브랜드명·키워드를 입력하면 제목이 바로 바뀜</li>
+          <li>신청 완료는 디비플래닛 팀이 보낸 알림 카드로 도착</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v4/">v4 열기</a>
+          <span class="path"><code>versions/v4</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v4/5b-voice.jpg" alt="v4 고객 후기"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v4/1-hero.jpg" alt="v4 첫 화면"><img src="shots/v4/3-name.jpg" alt="v4 브랜드 이름"><img src="shots/v4/4-service.jpg" alt="v4 서비스 단계"><img src="shots/v4/5-proof.jpg" alt="v4 성과 데이터"><img src="shots/v4/5b-voice.jpg" alt="v4 고객 후기"><img src="shots/v4/6-cta.jpg" alt="v4 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v3-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v3-title" class="v-title">v3 · 인트로 리뉴얼<small>레퍼런스 영상 3개 반영 · Magnific 행성 텍스처</small></h2>
+        <ul>
+          <li>헤드라인을 "브랜드가 보이는 순간"으로 변경 (탭 제목·푸터 포함)</li>
+          <li>배경을 보라 성운에서 거의 검정으로, 별은 적고 어둡게</li>
+          <li>일식 빛을 넓고 부드럽게, 색은 흰빛 → 로즈 → 라벤더 → 앰버로 천천히 변화</li>
+          <li>행성 테두리를 진주·은빛과 옅은 무지갯빛으로, 번짐은 약하게</li>
+          <li>우리 행성을 감싸는 데이터 입자 껍질 추가</li>
+          <li>Magnific 텍스처 4종(흑요석·진주빛 가스 행성·은빛 위성·우리 행성)과 굴곡 지도 3장</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v3/">v3 열기</a>
+          <span class="path"><code>versions/v3</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v3/1-hero.jpg" alt="v3 첫 화면"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v3/2-problem.jpg" alt="v3 문제 제기"><img src="shots/v3/3-name.jpg" alt="v3 브랜드 이름"><img src="shots/v3/4-service.jpg" alt="v3 서비스 단계"><img src="shots/v3/5-proof.jpg" alt="v3 성과 데이터"><img src="shots/v3/5b-voice.jpg" alt="v3 고객 후기"><img src="shots/v3/6-cta.jpg" alt="v3 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v2-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v2-title" class="v-title">v2 · 디자인 개선<small>design-taste-frontend 스킬 적용 · 점검 FAIL 15개 → 0개</small></h2>
+        <ul>
+          <li>작은 영문 라벨, STEP 번호, 그라데이션 글자, 글로우, 그림자, 유리 효과 제거</li>
+          <li>글씨 크기를 23가지에서 6단계로, 서체는 Pretendard 하나로</li>
+          <li>버튼은 단색 파랑으로, 첫 화면에 무료 진단 신청 버튼 추가</li>
+          <li>"뷰티·헬스케어 브랜드를 위한 팀입니다" 사진 섹션 추가</li>
+          <li>하단을 왼쪽 글 + 오른쪽 그림 배치로, 후기 옆 사진, 푸터 큰 워드마크</li>
+          <li>스냅 중 순간 이동하면 되돌아가던 스크롤 버그 수정</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v2/">v2 열기</a>
+          <span class="path"><code>versions/v2</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v2/1-hero.jpg" alt="v2 첫 화면"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v2/2-problem.jpg" alt="v2 문제 제기"><img src="shots/v2/3-name.jpg" alt="v2 브랜드 이름"><img src="shots/v2/4-service.jpg" alt="v2 서비스 단계"><img src="shots/v2/5-proof.jpg" alt="v2 성과 데이터"><img src="shots/v2/5b-voice.jpg" alt="v2 고객 후기"><img src="shots/v2/6-cta.jpg" alt="v2 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<section class="version" aria-labelledby="v1-title">
+  <div class="wrap">
+    <div class="v-head">
+      <div class="v-text">
+        <h2 id="v1-title" class="v-title">v1 · 원본 옮김<small>Claude Design 「메인 페이지」를 일반 웹사이트로</small></h2>
+        <ul>
+          <li>Claude Design 전용 형식을 HTML · CSS · JavaScript로 변환</li>
+          <li>화면은 원본과 같음 (같은 위치에서 나란히 비교해 확인)</li>
+          <li>3D 인트로 엔진은 원본 그대로, 이미지 18개를 프로젝트에서 받아 넣음</li>
+          <li>"무료 진단 신청" 링크는 같은 페이지 하단 폼으로 연결</li>
+        </ul>
+        <div class="v-actions">
+          <a class="btn" href="v1/">v1 열기</a>
+          <span class="path"><code>versions/v1</code></span>
+        </div>
+      </div>
+      <div class="v-hero"><img src="shots/v1/1-hero.jpg" alt="v1 첫 화면"></div>
+    </div>
+    <div class="strip">
+      <img src="shots/v1/2-problem.jpg" alt="v1 문제 제기"><img src="shots/v1/3-name.jpg" alt="v1 브랜드 이름"><img src="shots/v1/4-service.jpg" alt="v1 서비스 단계"><img src="shots/v1/5-proof.jpg" alt="v1 성과 데이터"><img src="shots/v1/5b-voice.jpg" alt="v1 고객 후기"><img src="shots/v1/6-cta.jpg" alt="v1 무료 진단 신청">
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <p>모든 버전이 같은 <code>assets</code> 폴더의 이미지를 함께 씁니다. 3D 인트로가 보이려면 사이트 폴더에서 서버를 켜고 열어야 합니다: <code>cd ~/dbplanet-site &amp;&amp; python3 -m http.server 8765</code></p>
+  <p>스크린샷은 1440×900 화면에서 찍었습니다.</p>
+</footer>
+
+<dialog id="zoom"><img alt=""><p></p></dialog>
+
+<script>
+  const trio = document.querySelectorAll('.trio img');
+  document.querySelectorAll('.scenes button').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('.scenes button').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+    trio.forEach(img => { img.src = `shots/${img.dataset.v}/${btn.dataset.scene}.jpg`; img.alt = `${img.dataset.v} ${btn.textContent}`; });
+  }));
+  const zoom = document.getElementById('zoom');
+  document.addEventListener('click', e => {
+    if (e.target.matches('main img, .trio img, .v-hero img, .strip img')) { zoom.querySelector('img').src = e.target.src; zoom.querySelector('p').textContent = e.target.alt; zoom.showModal(); }
+    else if (e.target === zoom || e.target.closest('dialog')) zoom.close();
+  });
+</script>
+</body>
+</html>
